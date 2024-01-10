@@ -96,6 +96,22 @@ Package removal in playbooks is controlled by the state. The value "absent" inst
       state: absent
 
 ```
+Playbooks support variables, allowing for the replacement of distribution-specific package names during the execution of the playbook. Variable declarations can be made in the inventory file and assigned to the target hosts based on the installed distribution. The usage of variables is evident in the files playbooks/refactored.yml and /inventory.
 
+Example:
+```yaml
+---
+- hosts: all
+  become: true # sudo elevation
+  tasks:
 
+  - name: install apache and php package
+    package: # generic module for package managers
+      name:
+        # variables defined in the inventory
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: latest
+      update_cache: yes
+```
 
