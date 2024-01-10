@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  become: true
+  become: true # sudo elevation
   tasks:
 
   - name: update repository
@@ -10,9 +10,9 @@
   - name: remove apache2 package
     apt:
       name: apache2
-      state: absent
+      state: absent # remove
 
   - name: remove php support
     apt:
       name: libapache2-mod-php
-      state: absent
+      state: absent # remove

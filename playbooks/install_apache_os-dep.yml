@@ -6,13 +6,16 @@
   - name: update repository
     apt:
       update_cache: yes
+    when: ansible_distribution in ["Debian", "Ubuntu"] # All apt-based systems
 
   - name: install apache2 package
     apt:
       name: apache2
       state: latest
+    when: ansible_distribution == "Debian" # Debian only
 
   - name: add php support
     apt:
       name: libapache2-mod-php
       state: latest
+    when: ansible_distribution == "Debian" # Debian only
