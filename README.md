@@ -59,3 +59,6 @@ This allows the previously used ping command to be shortened as follows.
 ```bash
 anbsible all -m ping
 ```
+## Performing Operations
+### Privilege Elevation
+To make changes to the system, the remote user needs administrative privileges. While for manual inputs, the sudo module is used for this purpose, with Ansible operations, the options --become and --ask-become-pass must be used to achieve privilege elevation. For example, updating package sources via the APT package manager is triggered with the command `ansible all -m apt -a "update_cache=true" --become --ask-become-pass`.
