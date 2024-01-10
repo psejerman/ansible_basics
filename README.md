@@ -66,7 +66,7 @@ To make changes to the system, the remote user needs administrative privileges. 
 ### Execution of Playbooks
 Playbooks are instructions for Ansible, stored in text files in YAML format. The following file describes the instruction to install the Apache2 package on all servers in the inventory using the APT package manager.
 Playbook-Example:
-```
+```yaml
 ---
 - hosts: all
   become: true
@@ -81,5 +81,21 @@ The execution of playbooks is triggered using the `ansible-playbook` tool.
 ```bash
 ansible-playbook --ask-become-pass filename.yaml
 ```
+
+Package removal in playbooks is controlled by the state. The value "absent" instructs the target host to remove the package.
+
+```yaml
+---
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install apache2 package
+    apt:
+      name: apache2
+      state: absent
+
+```
+
 
 

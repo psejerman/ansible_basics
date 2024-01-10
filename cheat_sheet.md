@@ -14,4 +14,5 @@ Docs: https://docs.ansible.com/ansible/2.9/modules/apt_module.html#apt-module
 | Safe upgrade of all packages     | `ansible all -m apt -a upgrade=yes --become --ask-become-pass`       |
 
 ### Executing Playbooks
+`ansible-playbook --ask-become-pass filename.yaml`
 
