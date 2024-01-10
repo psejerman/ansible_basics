@@ -62,3 +62,24 @@ anbsible all -m ping
 ## Performing Operations
 ### Privilege Elevation
 To make changes to the system, the remote user needs administrative privileges. While for manual inputs, the sudo module is used for this purpose, with Ansible operations, the options --become and --ask-become-pass must be used to achieve privilege elevation. For example, updating package sources via the APT package manager is triggered with the command `ansible all -m apt -a "update_cache=true" --become --ask-become-pass`.
+
+### Execution of Playbooks
+Playbooks are instructions for Ansible, stored in text files in YAML format. The following file describes the instruction to install the Apache2 package on all servers in the inventory using the APT package manager.
+Playbook-Example:
+```
+---
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install apache2 package
+    apt:
+      name: apache2
+
+```
+The execution of playbooks is triggered using the `ansible-playbook` tool.
+```bash
+ansible-playbook --ask-become-pass filename.yaml
+```
+
+
