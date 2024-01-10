@@ -8,18 +8,19 @@ This repository contains the basic steps for the integration of a Debian machine
 - Installed and configured SSH server on the target host
 - SSH access to the target machine using a key file within the context of a user with sudo permissions
 
-## Inventory and Connection test
 ## Inventory and Connection Test
 
 To declare the target systems to Ansible, a text file is created containing the addresses of the target hosts and named as the inventory. The format of the file requires one address per line. The addresses can be either IP addresses or DNS names.
 
 Example:
 ```
-host1.mydomain.org
-host2.mydomain.org
-host3.mydomain.org
+host1.mydomain.org ansible_user=username
+host2.mydomain.org ansible_user=username
+host3.mydomain.org ansible_user=username
 ```
 Connection test is performed using the ping module on all hosts listed in the inventory file.
+
+Note: The ansible_user variable can be specified as a command-line argument using `ansible -u` or `ansible --user`, or in the `~/.ssh/config` file on the control host.
 ```bash
 ansible all --key-file ~/.ssh/key_file -u username -i inventory -m ping
 ```
@@ -46,4 +47,15 @@ host3.mydomain.org | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
+```
+
+To simplify operations, parameters can be stored in a configuration file for Ansible. For this, a text file named ansible.cfg is created, where the parameter assignments are specified. The configuration file is automatically read when Ansible is invoked.
+```
+[defaults]
+inventory = inventory
+private_key_file = ~/.ssh/key_filename
+```
+This allows the previously used ping command to be shortened as follows.
+```bash
+anbsible all -m ping
 ```
